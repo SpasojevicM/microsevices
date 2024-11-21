@@ -15,49 +15,52 @@ check_status() {
   fi
 }
 
-echo "Starting Docker Compose for database and Kafka..."
-docker-compose up -d
-check_status "Docker Compose"
+# Pokretanje Admin sevice-a
+echo "Starting Admin Service..."
+cd admin || exit
+./gradlew clean build -x test &
+check_status "Admin Service"
+cd ..
 
 # Pokretanje Config Server-a
 echo "Starting Config Server..."
 cd config-server || exit
-./gradlew bootRun &
+./gradlew clean build -x test &
 check_status "Config Server"
 cd ..
 
 # Pokretanje Eureka Server-a
 echo "Starting Eureka Server..."
 cd eureka-server || exit
-./gradlew bootRun &
+./gradlew clean build -x test &
 check_status "Eureka Server"
 cd ..
 
 # Pokretanje API Gateway-a
 echo "Starting API Gateway..."
 cd api-gateway || exit
-./gradlew bootRun &
+./gradlew clean build -x test &
 check_status "API Gateway"
 cd ..
 
 # Pokretanje Order Service-a
 echo "Starting Order Service..."
 cd order-service || exit
-./gradlew bootRun &
+./gradlew clean build -x test &
 check_status "Order Service"
 cd ..
 
 # Pokretanje Inventory Service-a
 echo "Starting Inventory Service..."
 cd inventory-service || exit
-./gradlew bootRun &
+./gradlew clean build -x test &
 check_status "Inventory Service"
 cd ..
 
 # Pokretanje Notification Service-a
 echo "Starting Notification Service..."
 cd notification-service || exit
-./gradlew bootRun &
+./gradlew clean build -x test &
 check_status "Notification Service"
 cd ..
 
