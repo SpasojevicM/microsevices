@@ -76,6 +76,19 @@ services:
     networks:
       - microservices
 
+  notification-service-3:
+    build: ./notification-service
+    container_name: notification-service-3
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+      - spring.application.name=notification-service
+    depends_on:
+      - eureka-server
+      - kafka
+      - postgres
+    networks:
+      - microservices
+
   inventory-service:
     build: ./inventory-service
     container_name: inventory-service

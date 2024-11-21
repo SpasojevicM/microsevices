@@ -1,6 +1,7 @@
 package com.example.orderservice.controller;
 
 import com.example.orderservice.model.Order;
+import com.example.orderservice.service.OrderService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.ResponseEntity;
@@ -16,17 +17,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/orders")
 public class OrderController {
 
-    private final KafkaTemplate<String, String> kafkaTemplate;
-    private final ObjectMapper objectMapper;
+    private final OrderService orderService;
 
-    public OrderController(KafkaTemplate<String, String> kafkaTemplate, ObjectMapper objectMapper) {
-        this.kafkaTemplate = kafkaTemplate;
-        this.objectMapper = objectMapper;
+    public OrderController(OrderService orderService) {
+        this.orderService = orderService;
     }
 
     @PostMapping
     public ResponseEntity<String> createOrder(@RequestBody Order order) throws JsonProcessingException {
-        kafkaTemplate.send("order-created", objectMapper.writeValueAsString(order));
+        orderService.createOrder(order);
         return  ResponseEntity.ok("Order created");
     }
 
