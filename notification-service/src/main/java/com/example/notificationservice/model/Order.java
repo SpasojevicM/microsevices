@@ -8,6 +8,8 @@ import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name = "orders")
 @Getter
@@ -19,5 +21,8 @@ public class Order {
     private Long id;
     private String name;
     private String description;
+    private int partition;
+    private Long timestamp;
+    private LocalDateTime createdAt;
 
 }
