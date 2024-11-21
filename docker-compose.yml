@@ -123,6 +123,19 @@ services:
     networks:
       - microservices
 
+  kafka-create-topics:
+    image: bitnami/kafka:latest
+    container_name: kafka-create-topics
+    depends_on:
+      - kafka
+    hostname: kafka-create-topics
+    command: [ "bash", "./create_topic.sh" ]
+    working_dir: /kafka
+    volumes:
+      - ./kafka:/kafka
+    networks:
+      - microservices
+
   zookeeper:
     image: bitnami/zookeeper:latest
     container_name: zookeeper
